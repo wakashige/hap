@@ -385,7 +385,10 @@ static unsigned int hap_encode_texture(const void *inputBuffer, unsigned long in
         top_section_header_length = 4U;
     }
 
-    if (compressor == HapCompressorSnappy)
+    /*
+     For Snappy-compressed frames or when we must store dimensions, use the complex storage
+     */
+    if (compressor == HapCompressorSnappy || width > 0 || height > 0)
     {
         /*
          We attempt to chunk as requested, and if resulting frame is larger than it is uncompressed then
@@ -466,9 +469,10 @@ static unsigned int hap_encode_texture(const void *inputBuffer, unsigned long in
             compress_buffer_remaining -= chunk_packed_length;
         }
 
-        if (top_section_length < inputBufferBytes + top_section_header_length)
+        if (top_section_length < inputBufferBytes + top_section_header_length || width > 0 || height > 0)
         {
             // use the complex storage because snappy compression saved space
+            // or because we have to record dimensions
             storedCompressor = kHapCompressorComplex;
         }
         else
@@ -478,7 +482,7 @@ static unsigned int hap_encode_texture(const void *inputBuffer, unsigned long in
         }
     }
 
-    if (compressor == HapCompressorNone)
+    if (compressor == HapCompressorNone && width == 0 && height == 0)
     {
         memcpy(((uint8_t *)outputBuffer) + top_section_header_length, inputBuffer, inputBufferBytes);
         top_section_length = inputBufferBytes;
