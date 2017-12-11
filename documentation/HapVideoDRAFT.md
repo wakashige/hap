@@ -94,14 +94,17 @@ The Decode Instructions Container may contain the following sections which dicta
 |0x02                  |Chunk Second-Stage Compressor Table |
 |0x03                  |Chunk Size Table                    | 
 |0x04                  |Chunk Offset Table                  |
+|0x05                  |Frame Dimensions                    |
 
 A Chunk Second-Stage Compressor Table must be accompanied by a Chunk Size Table. The Chunk Offset Table may be omitted.
 
-The presence of any of these sections indicates that frame data is split into chunks, which are to be passed to their second-stage decompressor independently.
+The presence of a Chunk Second-Stage Compressor Table indicates that frame data is split into chunks, which are to be passed to their second-stage decompressor independently.
 
 The number of chunks is indicated by the number of entries in these tables, which must be the same for each table.
 
 In the absence of a Chunk Offset Table the offset from the start of the frame data to the start of each chunk is calculated by summing the sizes of the preceding chunks.
+
+The Frame Dimensions section may be omitted.
 
 #####Chunk Second-Stage Compressor Table
 
@@ -119,6 +122,10 @@ The section data is a series of four-byte fields being unsigned integers stored 
 #####Chunk Offset Table
 
 The section data is a series of four-byte fields being unsigned integers stored in little-endian byte order, indicating the offset in bytes of each chunk from the start of the frame data. 
+
+#####Frame Dimensions
+
+The section data is two four-byte fields being unsigned integers stored in little-endian byte order, indicating the width and the height of the full frame in pixels, in that order.
 
 ##Names and Identifiers
 
