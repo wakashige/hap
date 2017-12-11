@@ -744,12 +744,12 @@ static unsigned int hap_parse_complex(const void *input_buffer, size_t input_buf
     return HapResult_No_Error;
 }
 
-unsigned int hap_decode_single_texture(const void *texture_section, uint32_t texture_section_length,
-                                       unsigned int texture_section_type,
-                                       HapDecodeCallback callback, void *info,
-                                       void *outputBuffer, unsigned long outputBufferBytes,
-                                       unsigned long *outputBufferBytesUsed,
-                                       unsigned int *outputBufferTextureFormat)
+static unsigned int hap_decode_single_texture(const void *texture_section, uint32_t texture_section_length,
+                                              unsigned int texture_section_type,
+                                              HapDecodeCallback callback, void *info,
+                                              void *outputBuffer, unsigned long outputBufferBytes,
+                                              unsigned long *outputBufferBytesUsed,
+                                              unsigned int *outputBufferTextureFormat)
 {
     int result = HapResult_No_Error;
     unsigned int textureFormat;
@@ -945,9 +945,9 @@ unsigned int hap_decode_single_texture(const void *texture_section, uint32_t tex
     return HapResult_No_Error;
 }
 
-int hap_get_section_at_index(const void *input_buffer, uint32_t input_buffer_bytes,
-                             unsigned int index,
-                             const void **section, uint32_t *section_length, unsigned int *section_type)
+static int hap_get_section_at_index(const void *input_buffer, uint32_t input_buffer_bytes,
+                                    unsigned int index,
+                                    const void **section, uint32_t *section_length, unsigned int *section_type)
 {
     int result;
     uint32_t section_header_length;
