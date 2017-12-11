@@ -337,7 +337,7 @@ unsigned long HapMaxEncodedLength(unsigned int count,
 }
 
 static unsigned int hap_encode_texture(const void *inputBuffer, unsigned long inputBufferBytes, unsigned int textureFormat,
-                                       unsigned int compressor, unsigned int chunkCount, int width, int height,
+                                       unsigned int compressor, unsigned int chunkCount, unsigned int width, unsigned int height,
                                        void *outputBuffer, unsigned long outputBufferBytes, unsigned long *outputBufferBytesUsed)
 {
     size_t top_section_header_length;
