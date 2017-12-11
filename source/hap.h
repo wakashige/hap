@@ -88,6 +88,8 @@ unsigned long HapMaxEncodedLength(unsigned int count,
  textureFormats is an array of HapTextureFormats
  compressors is an array of HapCompressors
  chunkCounts is an array of chunk counts to permit multithreaded decoding (1 or more)
+ width and height are the dimensions of the frame, or 0 to indicate dimensions are not to be stored
+  Generally dimensions are only stored if the container does not already carry that information
  outputBuffer is the destination buffer to receive the encoded frame
  outputBufferBytes is the destination buffer's length in bytes
  outputBufferBytesUsed will be set to the actual encoded length of the frame on return
@@ -97,6 +99,7 @@ unsigned int HapEncode(unsigned int count,
                        unsigned int *textureFormats,
                        unsigned int *compressors,
                        unsigned int *chunkCounts,
+                       unsigned int width, unsigned int height,
                        void *outputBuffer, unsigned long outputBufferBytes,
                        unsigned long *outputBufferBytesUsed);
 
@@ -140,8 +143,16 @@ unsigned int HapGetFrameTextureCount(const void *inputBuffer, unsigned long inpu
 
 /*
  On return sets outputBufferTextureFormat to a HapTextureFormat constant describing the format of the texture at index in the frame.
+ Returns HapResult_No_Error or an error.
  */
 unsigned int HapGetFrameTextureFormat(const void *inputBuffer, unsigned long inputBufferBytes, unsigned int index, unsigned int *outputBufferTextureFormat);
+
+/*
+ On return sets outWidth and outHeight to the width and height of the frame if that information is stored.
+ If no dimension information is stored, outWidth and outHeight are set to 0.
+ Returns HapResult_No_Error or an error.
+ */
+unsigned int HapGetFrameDimensions(const void *inputBuffer, unsigned long inputBufferBytes, unsigned int *outWidth, unsigned int *outHeight);
 
 #ifdef __cplusplus
 }
