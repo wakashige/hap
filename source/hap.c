@@ -738,10 +738,9 @@ static unsigned int hap_parse_complex(const void *input_buffer, size_t input_buf
     }
 
     /*
-     If one of the Chunk Second-Stage Compressor Table and Chunk Size Table is present, the other must
-     be also.
+     The Chunk Second-Stage Compressor Table and Chunk Size Table are required
      */
-    if ((*compressors_table == NULL) != (*chunk_sizes_table == NULL))
+    if (*compressors_table == NULL || *chunk_sizes_table == NULL)
     {
         return HapResult_Bad_Frame;
     }
@@ -786,14 +785,6 @@ static unsigned int hap_decode_single_texture(const void *texture_section, uint3
         const char *texture_data = NULL;
 
         result = hap_parse_complex(texture_section, texture_section_length, &chunk_count, &compressors, &chunk_sizes, &chunk_offsets, &dimensions, &texture_data);
-
-        /*
-         The Chunk Second-Stage Compressor Table and Chunk Size Table are required
-         */
-        if (compressors == NULL || chunk_sizes == NULL)
-        {
-            return HapResult_Bad_Frame;
-        }
 
         if (chunk_count > 0)
         {
