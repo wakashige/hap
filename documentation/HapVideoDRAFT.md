@@ -143,7 +143,7 @@ A single Hap frame may be stored as an image file. In this case the frame must b
 
 |Human-Readable Description |File Extension |
 |---------------------------|---------------|
-|Hap Image                  |hpx            |
+|Hap Image                  |hpz            |
 
 
 [1]: http://www.opengl.org/registry/specs/EXT/texture_compression_s3tc.txt
